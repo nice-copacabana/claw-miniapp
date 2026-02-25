@@ -1,4 +1,5 @@
 {
+  "appid": "wxa4b45cfa367e14c8",
   "pages": [
     "pages/index/index",
     "pages/chat/chat",

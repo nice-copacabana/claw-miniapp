@@ -1,5 +1,5 @@
 // app.js
-const WORKER_URL = 'https://claw-miniapp-worker.YOUR_CF_SUBDOMAIN.workers.dev';
+const WORKER_URL = 'https://claw-miniapp-worker.luckyalex9556.workers.dev';
 
 App({
   globalData: {

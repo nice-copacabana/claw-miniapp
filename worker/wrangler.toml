@@ -4,7 +4,7 @@ compatibility_date = "2024-01-01"
 
 [[kv_namespaces]]
 binding = "MESSAGES"
-id = "YOUR_KV_NAMESPACE_ID"
+id = "93944c7cc4354c32a557ff9cb20112a3"
 
 [vars]
 OPENCLAW_WEBHOOK_PATH = "/webhook/miniapp"
