@@ -73,13 +73,29 @@ async function pushReply(openid, message) {
 
 async function fetchUrlContent(url) {
   try {
-    // 用 OpenClaw 的 web_fetch 工具抓取内容（支持 chrome-wrapper 绕过微信限制）
-    const result = await ocInvoke('web_fetch', { url, extractMode: 'markdown', maxChars: 8000 });
-    const text = result?.result?.content?.[0]?.text || result?.result?.details?.content || '';
+    // 用 browser 工具（走 chrome-wrapper，能绕过微信公众号限制）
+    const result = await ocInvoke('browser', {
+      action: 'open',
+      targetUrl: url,
+      profile: 'openclaw',
+    });
+    // 等页面加载后抓取内容
+    await new Promise(r => setTimeout(r, 2000));
+    const snap = await ocInvoke('browser', {
+      action: 'snapshot',
+      snapshotFormat: 'ai',
+      maxChars: 6000,
+    });
+    const text = snap?.result?.details?.content || snap?.result?.content?.[0]?.text || '';
     return text.trim() || null;
   } catch (e) {
-    console.error('[poller] web_fetch failed:', e.message);
-    return null;
+    console.error('[poller] browser fetch failed:', e.message);
+    // fallback: web_fetch
+    try {
+      const r2 = await ocInvoke('web_fetch', { url, extractMode: 'markdown', maxChars: 6000 });
+      const t2 = r2?.result?.content?.[0]?.text || '';
+      return t2.trim() || null;
+    } catch { return null; }
   }
 }
 
