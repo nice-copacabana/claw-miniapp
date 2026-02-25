@@ -13,19 +13,15 @@ App({
     this.startPolling();
   },
 
-  // 获取用户 openid（静默登录）
-  async initUser() {
-    try {
-      const { code } = await wx.login();
-      const res = await this.request('/auth/login', 'POST', { code });
-      if (res.openid) {
-        this.globalData.openid = res.openid;
-        wx.setStorageSync('openid', res.openid);
-      }
-    } catch (e) {
-      // 用本地缓存兜底
-      this.globalData.openid = wx.getStorageSync('openid') || '';
+  // 获取用户标识（本地生成稳定 ID，无需后端登录接口）
+  initUser() {
+    let openid = wx.getStorageSync('openid');
+    if (!openid) {
+      // 首次启动生成一个本地唯一 ID
+      openid = 'local_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+      wx.setStorageSync('openid', openid);
     }
+    this.globalData.openid = openid;
   },
 
   // 全局轮询娜娜回复（30秒一次）
