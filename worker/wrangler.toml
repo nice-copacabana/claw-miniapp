@@ -1,0 +1,16 @@
+name = "claw-miniapp-worker"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "MESSAGES"
+id = "YOUR_KV_NAMESPACE_ID"
+
+[vars]
+OPENCLAW_WEBHOOK_PATH = "/webhook/miniapp"
+
+# 敏感变量用 wrangler secret put 设置：
+# OPENCLAW_URL      - OpenClaw 公网地址，如 https://your-server:18789
+# OPENCLAW_TOKEN    - OpenClaw gateway token
+# WX_APPID          - 小程序 AppID
+# WX_APPSECRET      - 小程序 AppSecret

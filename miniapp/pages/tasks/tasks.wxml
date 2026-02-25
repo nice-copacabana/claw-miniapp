@@ -1,0 +1,34 @@
+<!-- pages/tasks/tasks.wxml -->
+<view class="container">
+  <view class="header-row">
+    <text class="section-title">⚡ Agent 任务</text>
+    <view class="btn-refresh" bindtap="refresh">刷新</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:elif="{{tasks.length === 0}}" class="empty">
+    <text>暂无运行中的任务</text>
+  </view>
+
+  <view wx:else>
+    <view wx:for="{{tasks}}" wx:key="id" class="task-card status-{{item.status}}">
+      <view class="task-header">
+        <text class="task-name">{{item.name}}</text>
+        <text class="task-status">{{item.statusText}}</text>
+      </view>
+      <text class="task-desc">{{item.description}}</text>
+      <text class="task-time">{{item.timeStr}}</text>
+    </view>
+  </view>
+
+  <!-- 快速下发任务 -->
+  <view class="card new-task">
+    <text class="card-title">下发新任务</text>
+    <textarea class="task-input" value="{{newTask}}" bindinput="onTaskInput"
+              placeholder="描述任务，例如：帮我审计 meteor-shower 仓库" auto-height/>
+    <button class="btn-primary" bindtap="submitTask" loading="{{submitting}}">
+      交给娜娜
+    </button>
+  </view>
+</view>

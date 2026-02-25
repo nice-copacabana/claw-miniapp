@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/chat/chat",
+    "pages/capture/capture",
+    "pages/tasks/tasks"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "navigationBarTitleText": "娜娜助理",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#6c63ff",
+    "backgroundColor": "#fff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/icons/home.png", "selectedIconPath": "assets/icons/home-active.png" },
+      { "pagePath": "pages/chat/chat", "text": "对话", "iconPath": "assets/icons/chat.png", "selectedIconPath": "assets/icons/chat-active.png" },
+      { "pagePath": "pages/capture/capture", "text": "捕捉", "iconPath": "assets/icons/capture.png", "selectedIconPath": "assets/icons/capture-active.png" },
+      { "pagePath": "pages/tasks/tasks", "text": "任务", "iconPath": "assets/icons/tasks.png", "selectedIconPath": "assets/icons/tasks-active.png" }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

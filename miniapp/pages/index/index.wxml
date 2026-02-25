@@ -1,0 +1,38 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <view class="header">
+    <image class="avatar" src="/assets/nana.png" mode="aspectFill"/>
+    <view class="header-info">
+      <text class="name">娜娜助理</text>
+      <text class="status {{online ? 'online' : 'offline'}}">{{online ? '在线' : '离线'}}</text>
+    </view>
+  </view>
+
+  <view class="quick-actions">
+    <view class="action-card" bindtap="goChat">
+      <text class="action-icon">💬</text>
+      <text class="action-label">对话</text>
+    </view>
+    <view class="action-card" bindtap="goCapture">
+      <text class="action-icon">📎</text>
+      <text class="action-label">转发链接</text>
+    </view>
+    <view class="action-card" bindtap="goTasks">
+      <text class="action-icon">⚡</text>
+      <text class="action-label">任务状态</text>
+    </view>
+    <view class="action-card" bindtap="quickNote">
+      <text class="action-icon">📝</text>
+      <text class="action-label">随手记</text>
+    </view>
+  </view>
+
+  <view class="recent-section">
+    <text class="section-title">最近消息</text>
+    <view wx:if="{{messages.length === 0}}" class="empty">暂无消息</view>
+    <view wx:for="{{messages}}" wx:key="id" class="msg-item {{item.from === 'nana' ? 'from-nana' : 'from-me'}}">
+      <text class="msg-text">{{item.message}}</text>
+      <text class="msg-time">{{item.timeStr}}</text>
+    </view>
+  </view>
+</view>

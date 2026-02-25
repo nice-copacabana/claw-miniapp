@@ -1,0 +1,32 @@
+<!-- pages/chat/chat.wxml -->
+<view class="chat-container">
+  <scroll-view class="msg-list" scroll-y scroll-into-view="{{scrollTo}}" scroll-with-animation>
+    <view wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
+      <view class="msg-row {{item.from === 'nana' ? 'row-nana' : 'row-me'}}">
+        <image wx:if="{{item.from === 'nana'}}" class="avatar" src="/assets/nana.png"/>
+        <view class="bubble {{item.from === 'nana' ? 'bubble-nana' : 'bubble-me'}}">
+          <text selectable>{{item.message}}</text>
+        </view>
+      </view>
+      <text class="msg-time-center">{{item.timeStr}}</text>
+    </view>
+    <view wx:if="{{typing}}" class="msg-row row-nana">
+      <image class="avatar" src="/assets/nana.png"/>
+      <view class="bubble bubble-nana typing">
+        <text>...</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="input-bar">
+    <input class="input" value="{{inputText}}" bindinput="onInput"
+           placeholder="说点什么..." confirm-type="send" bindconfirm="sendText"
+           adjust-position cursor-spacing="20"/>
+    <view class="btn-voice" bindtouchstart="startVoice" bindtouchend="stopVoice">
+      <text>🎤</text>
+    </view>
+    <view class="btn-send" bindtap="sendText">
+      <text>发送</text>
+    </view>
+  </view>
+</view>

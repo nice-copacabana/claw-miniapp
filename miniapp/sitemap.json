@@ -1,0 +1,4 @@
+{
+  "desc": "claw-miniapp sitemap",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

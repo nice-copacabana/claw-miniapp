@@ -1,0 +1,40 @@
+<!-- pages/capture/capture.wxml -->
+<view class="container">
+  <view class="section-title">转发内容给娜娜</view>
+
+  <!-- 链接输入 -->
+  <view class="card">
+    <text class="card-title">📎 链接/文章</text>
+    <input class="url-input" value="{{url}}" bindinput="onUrlInput"
+           placeholder="粘贴公众号或网页链接..." />
+    <input class="title-input" value="{{urlTitle}}" bindinput="onTitleInput"
+           placeholder="备注（可选）" />
+    <button class="btn-primary" bindtap="sendLink" loading="{{sending}}">
+      发给娜娜
+    </button>
+  </view>
+
+  <!-- 图片分析 -->
+  <view class="card">
+    <text class="card-title">🖼️ 图片分析</text>
+    <view class="img-picker" bindtap="pickImage">
+      <image wx:if="{{imageUrl}}" src="{{imageUrl}}" mode="aspectFit" class="preview-img"/>
+      <text wx:else class="pick-hint">点击选择图片</text>
+    </view>
+    <input class="title-input" value="{{imageNote}}" bindinput="onImageNoteInput"
+           placeholder="问娜娜什么？（可选）" />
+    <button class="btn-primary" bindtap="sendImage" disabled="{{!imageUrl}}" loading="{{sendingImg}}">
+      发给娜娜分析
+    </button>
+  </view>
+
+  <!-- 随手记 -->
+  <view class="card">
+    <text class="card-title">📝 随手记</text>
+    <textarea class="note-input" value="{{note}}" bindinput="onNoteInput"
+              placeholder="想法、待办、任何内容..." auto-height maxlength="2000"/>
+    <button class="btn-secondary" bindtap="sendNote" loading="{{sendingNote}}">
+      存到飞书 / 让娜娜处理
+    </button>
+  </view>
+</view>
