@@ -71,9 +71,29 @@ async function pushReply(openid, message) {
   });
 }
 
-function formatMessage(type, content, extra) {
+async function fetchUrlContent(url) {
+  try {
+    // 用 OpenClaw 的 web_fetch 工具抓取内容（支持 chrome-wrapper 绕过微信限制）
+    const result = await ocInvoke('web_fetch', { url, extractMode: 'markdown', maxChars: 8000 });
+    const text = result?.result?.content?.[0]?.text || result?.result?.details?.content || '';
+    return text.trim() || null;
+  } catch (e) {
+    console.error('[poller] web_fetch failed:', e.message);
+    return null;
+  }
+}
+
+async function formatMessage(type, content, extra) {
   switch (type) {
-    case 'link':  return `[小程序分享链接] ${extra?.title || ''}\n${content}`;
+    case 'link': {
+      const title = extra?.title || '';
+      // 先抓取链接内容
+      const pageContent = await fetchUrlContent(content);
+      if (pageContent) {
+        return `[小程序分享链接] ${title}\n链接：${content}\n\n--- 页面内容 ---\n${pageContent}`;
+      }
+      return `[小程序分享链接] ${title}\n${content}`;
+    }
     case 'voice': return `[语音转文字] ${content}`;
     case 'image': return `[图片] ${content}`;
     case 'task':  return `[任务指令] ${content}`;
@@ -82,7 +102,7 @@ function formatMessage(type, content, extra) {
 }
 
 async function processMessage(msg) {
-  const text = formatMessage(msg.type, msg.content, msg.extra);
+  const text = await formatMessage(msg.type, msg.content, msg.extra);
   const sessionKey = getSessionKey(msg.openid);
 
   // 通过 sessions_send 注入消息到 OpenClaw session，等待回复
